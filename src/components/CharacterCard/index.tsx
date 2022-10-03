@@ -7,7 +7,7 @@ import { API, PokemonImg } from "../../services";
 import { useCharacterInfoProvider } from "../../providers/CharacterInfoProvider";
 import { useNavigate } from "react-router-dom";
 
-const CharacterCard = ({ ...props }: { name: string; id: number }) => {
+const CharacterCard = ({ ...props }: { name: string; id: string }) => {
   const { setCharacterInfo } = useCharacterInfoProvider();
 
   const navigate = useNavigate();

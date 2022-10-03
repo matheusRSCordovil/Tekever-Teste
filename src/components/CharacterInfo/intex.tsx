@@ -37,6 +37,7 @@ const CharacterInfo = () => {
       }}
     >
       <p>{characterInfo.name}</p>
+
       <button onClick={() => handleFavorite(characterInfo.id)}>
         Favoritar
       </button>
