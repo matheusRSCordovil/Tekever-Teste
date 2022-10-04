@@ -12,7 +12,7 @@ const CharacterCard = ({ ...props }: { name: string; id: string }) => {
 
   const navigate = useNavigate();
 
-  const handleCharacterInfo = async () => {
+  const handleCharacterInfo = () => {
     API.get(`pokemon/${props.id}`).then((response) => {
       setCharacterInfo(response.data);
       navigate("/character-info");
@@ -20,7 +20,11 @@ const CharacterCard = ({ ...props }: { name: string; id: string }) => {
   };
 
   return (
-    <Card sx={{ maxWidth: 345 }} onClick={handleCharacterInfo}>
+    <Card
+      sx={{ maxWidth: 345 }}
+      onClick={handleCharacterInfo}
+      style={{ margin: "2%" }}
+    >
       <CardActionArea>
         <CardMedia
           component="img"
@@ -28,6 +32,7 @@ const CharacterCard = ({ ...props }: { name: string; id: string }) => {
           image={PokemonImg(props.id)}
           alt="pokemon image"
         />
+
         <CardContent>
           <Typography gutterBottom variant="h5" component="div">
             {props.name}

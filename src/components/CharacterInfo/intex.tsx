@@ -1,29 +1,9 @@
 import { useCharacterInfoProvider } from "../../providers/CharacterInfoProvider";
+import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
+import { handleFavorite } from "../helpers/handleFavorite";
 
 const CharacterInfo = () => {
   const { characterInfo, favorites, setFavorites } = useCharacterInfoProvider();
-
-  const handleFavorite = (id: string) => {
-    let array: string[] | [""] = favorites;
-    let addArray = true;
-
-    // eslint-disable-next-line array-callback-return
-    array.map((item: any) => {
-      if (item.id === id) {
-        array.splice(array.indexOf(item), 1);
-        addArray = false;
-      }
-    });
-
-    if (addArray) {
-      array.push(characterInfo);
-    }
-
-    setFavorites([...array]);
-    localStorage.setItem("favorites", JSON.stringify(array));
-  };
-
-  console.log(characterInfo);
 
   return (
     <div
@@ -38,7 +18,16 @@ const CharacterInfo = () => {
     >
       <p>{characterInfo.name}</p>
 
-      <button onClick={() => handleFavorite(characterInfo.id)}>
+      <button
+        onClick={() =>
+          handleFavorite(
+            characterInfo.id,
+            favorites,
+            characterInfo,
+            setFavorites
+          )
+        }
+      >
         Favoritar
       </button>
     </div>
