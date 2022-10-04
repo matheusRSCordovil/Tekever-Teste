@@ -83,6 +83,7 @@ const Home = () => {
       >
         <ArrowBackIosIcon
           onClick={handlePreviousPage}
+          data-testid="prev-page"
           style={{
             cursor: previousPage?.length ? "pointer" : "not-allowed",
             color: previousPage?.length ? "" : "#cdcdcd",
@@ -91,6 +92,7 @@ const Home = () => {
 
         <ArrowForwardIosIcon
           onClick={handleNextPage}
+          data-testid="next-page"
           style={{
             cursor: nextPage?.length ? "pointer" : "not-allowed",
             color: nextPage?.length ? "" : "#cdcdcd",
