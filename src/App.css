@@ -16,6 +16,16 @@
   }
 }
 
+@font-face {
+  font-family: "Poke-font";
+  src: local("Poke"), url(./assets/fonts/Poke/PokeSolid.ttf) format("truetype");
+}
+
+@font-face {
+  font-family: "Poke-hollow-font";
+  src: local("Poke"), url(./assets/fonts/Poke/PokeHollow.ttf) format("truetype");
+}
+
 .App-header {
   background-color: #282c34;
   display: flex;

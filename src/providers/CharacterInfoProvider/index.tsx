@@ -6,9 +6,9 @@ interface Props {
 
 type CharacterInfoProviderProps = {
   characterInfo: any;
-  setCharacterInfo: any;
+  setCharacterInfo: (characterInfo: any) => void;
   favorites: any[];
-  setFavorites: any;
+  setFavorites: (favorites: any[]) => void;
 };
 
 const DEFAULT_VALUE = {
@@ -21,6 +21,7 @@ const DEFAULT_VALUE = {
 const CharacterInfoContext =
   createContext<CharacterInfoProviderProps>(DEFAULT_VALUE);
 
+// provider to share character info and favorites between components and avoid prop drilling, with better component separation
 export const CharacterInfoProvider: React.FC<Props> = ({ children }) => {
   const [characterInfo, setCharacterInfo] = useState<string>(
     DEFAULT_VALUE.characterInfo

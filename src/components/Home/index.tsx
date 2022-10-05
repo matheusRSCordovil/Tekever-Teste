@@ -4,8 +4,12 @@ import { API } from "../../services";
 import CharacterCard from "../CharacterCard";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
+import FavoriteIcon from "../../assets/img/favoritesIcon.png";
+import { MainContainer } from "./styles";
 
 const Home = () => {
+  const navigate = useNavigate();
+
   const [pokemonList, setPokemonList] = useState([] as any[]);
   const [nextPage, setNextPage] = useState<string>("");
   const [previousPage, setPreviousPage] = useState<string>("");
@@ -30,8 +34,7 @@ const Home = () => {
     }
   };
 
-  const navigate = useNavigate();
-
+  // similar to componentDidMount, with list of pokemons on first render with next and second page variables
   useEffect(() => {
     API.get("pokemon").then((response) => {
       setPokemonList(response.data.results);
@@ -47,43 +50,34 @@ const Home = () => {
   }, []);
 
   return (
-    <div style={{ display: "flex", flexDirection: "column" }}>
-      <div
-        style={{
-          display: "flex",
-          flexWrap: "wrap",
-          justifyContent: "space-around",
-          width: "90%",
-          margin: "auto",
-        }}
-      >
+    <MainContainer>
+      <h4>Home</h4>
+
+      <div className="pokemon-list">
         {pokemonList.map((pokemon) => (
           <CharacterCard
             key={pokemon.url}
             name={pokemon.name}
+            // get id from url
             id={pokemon.url.split("/")[pokemon.url.split("/").length - 2]}
           />
         ))}
       </div>
 
-      <button
-        style={{ position: "fixed", right: "5%", bottom: "5%" }}
-        onClick={() => navigate("/favorites")}
-      >
-        favoritos
-      </button>
-
       <div
-        style={{
-          display: "flex",
-          width: "4%",
-          margin: "20px auto",
-          justifyContent: "space-between",
-        }}
+        className="favorite-button"
+        onClick={() => navigate("/favorites")}
+        data-testid="favorites-button"
       >
+        <img alt="favorite-button" src={FavoriteIcon} />
+
+        <p>Favorites</p>
+      </div>
+
+      <div className="pagination">
         <ArrowBackIosIcon
           onClick={handlePreviousPage}
-          data-testid="prev-page"
+          // if previous page is null, disable button
           style={{
             cursor: previousPage?.length ? "pointer" : "not-allowed",
             color: previousPage?.length ? "" : "#cdcdcd",
@@ -92,14 +86,14 @@ const Home = () => {
 
         <ArrowForwardIosIcon
           onClick={handleNextPage}
-          data-testid="next-page"
+          // if next page is null, disable button
           style={{
             cursor: nextPage?.length ? "pointer" : "not-allowed",
             color: nextPage?.length ? "" : "#cdcdcd",
           }}
         />
       </div>
-    </div>
+    </MainContainer>
   );
 };
 

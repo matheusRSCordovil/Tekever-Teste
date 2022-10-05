@@ -1,3 +1,4 @@
+/* eslint-disable array-callback-return */
 export const handleFavorite = (
   id: string,
   favorites: any[],
@@ -7,7 +8,7 @@ export const handleFavorite = (
   let array: string[] | [""] = favorites;
   let addArray = true;
 
-  // eslint-disable-next-line array-callback-return
+  // if id is already in favorites, remove it
   array.map((item: any) => {
     if (item.id === id) {
       array.splice(array.indexOf(item), 1);
@@ -15,6 +16,7 @@ export const handleFavorite = (
     }
   });
 
+  // if id is not in favorites, add it
   if (addArray) {
     array.push(characterInfo);
   }
