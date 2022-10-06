@@ -39,6 +39,27 @@ export const MainContainer = styled.div`
     border-radius: 10px;
   }
 
+  .profile-card > div:first-child {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .profile-card > div:nth-child(n + 2):nth-child(-n + 3) {
+    display: flex;
+    flex-direction: column;
+    width: 30%;
+    text-align: left;
+    padding-left: 20px;
+  }
+
+  .profile-card > div:first-child > img {
+    width: 180px;
+    height: 180px;
+    border-radius: 50%;
+    background: rgb(211, 197, 147);
+  }
+
   .sprites-container {
     display: flex;
     flex-wrap: wrap;
@@ -53,5 +74,13 @@ export const MainContainer = styled.div`
     height: 45px;
     border-radius: 50%;
     background: #d3c593;
+  }
+
+  .heart-icon {
+    color: red;
+    width: 54px;
+    height: 54px;
+    margin-top: 20px;
+    cursor: pointer;
   }
 `;

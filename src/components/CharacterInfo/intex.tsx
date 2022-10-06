@@ -15,23 +15,8 @@ const CharacterInfo = () => {
   return (
     <MainContainer>
       <div className="profile-card">
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-          }}
-        >
-          <img
-            src={characterInfo.sprites.front_default}
-            alt="pokemon"
-            style={{
-              width: 180,
-              height: 180,
-              borderRadius: "50%",
-              background: "#d3c593",
-            }}
-          />
+        <div>
+          <img src={characterInfo.sprites.front_default} alt="pokemon" />
           {handleIsFavorite(characterInfo.id + "") ? (
             <AiFillHeart
               className="heart-icon"
@@ -43,7 +28,6 @@ const CharacterInfo = () => {
                   setFavorites
                 )
               }
-              style={{ width: 54, height: 54, marginTop: 20, color: "red" }}
             />
           ) : (
             <AiOutlineHeart
@@ -56,37 +40,22 @@ const CharacterInfo = () => {
                   setFavorites
                 )
               }
-              style={{ width: 54, height: 54, marginTop: 20, color: "red" }}
             />
           )}
         </div>
 
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            width: "30%",
-            textAlign: "left",
-            paddingLeft: 20,
-          }}
-        >
+        <div>
           <div>Name: {characterInfo.name}</div>
           <div>Height: {characterInfo.height}</div>
           <div>Weight: {characterInfo.weight} </div>
         </div>
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            width: "30%",
-            textAlign: "left",
-            paddingLeft: 20,
-          }}
-        >
+
+        <div>
           <div>Species: {characterInfo.species.name} </div>
           <div>Base XP: {characterInfo.base_experience}</div>
         </div>
       </div>
+
       <div className="sprites-container">
         {characterInfo.sprites.front_default && (
           <img src={characterInfo.sprites.front_default} alt="pokemon" />

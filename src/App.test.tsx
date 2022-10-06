@@ -31,7 +31,7 @@ test("fetch previous page on first render", async () => {
   expect(previousUrl).toBe(null);
 });
 
-test("get previous page on second page", async () => {
+test("get previous url on second page", async () => {
   let previousUrl: string = "";
   await API.get("pokemon?offset=20&limit=20").then(
     (res) => (previousUrl = res.data.previous)
