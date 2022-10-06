@@ -4,13 +4,13 @@ import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
 import { CardActionArea, CardHeader } from "@mui/material";
 import { API, PokemonImg } from "../../services";
-import { useCharacterInfoProvider } from "../../providers/CharacterInfoProvider";
+import { usePokemonProvider } from "../../providers/PokemonProvider";
 import { useNavigate } from "react-router-dom";
 import HeartIcon from "../../assets/img/heartFavHomeIcon.png";
 import { handleIsFavorite } from "../../helpers/handleIsFavorite";
 
 const CharacterCard = ({ ...props }: { name: string; id: string }) => {
-  const { setCharacterInfo } = useCharacterInfoProvider();
+  const { setCharacterInfo } = usePokemonProvider();
 
   const navigate = useNavigate();
 

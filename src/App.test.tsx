@@ -1,6 +1,8 @@
 import { API } from "./services";
 import { render, screen, fireEvent } from "@testing-library/react";
 import Home from "./components/Home";
+import { handleIsFavorite } from "./helpers/handleIsFavorite";
+import { handleFavorite } from "./helpers/handleFavoriteList";
 
 const mockedUsedNavigate = jest.fn();
 
@@ -42,7 +44,7 @@ test("get previous url on second page", async () => {
   );
 });
 
-test("get to favorite page", () => {
+test("go to favorite page", () => {
   render(<Home />);
   const favoritesBtn = screen.getByTestId("favorites-button");
 
@@ -50,4 +52,67 @@ test("get to favorite page", () => {
 
   const favorites = screen.getByText(/favorites/i);
   expect(favorites).toBeInTheDocument();
+});
+
+test("favorites save and retrieve of localStorage", () => {
+  const favorites: any[] = [
+    {
+      id: 1,
+      name: "bulbasaur",
+      url: "https://pokeapi.co/api/v2/pokemon/1/",
+    },
+    {
+      id: 2,
+      name: "ivysaur",
+      url: "https://pokeapi.co/api/v2/pokemon/2/",
+    },
+  ];
+
+  handleFavorite("100", favorites, favorites[0], (arg0: string[]) => "nothing");
+
+  const list = localStorage.getItem("favorites");
+
+  // @ts-ignore
+  expect(JSON.parse(list).length).toBe(3);
+});
+
+test("function handleIsFavorite functionality", () => {
+  const favorites: any[] = [
+    {
+      id: 1,
+      name: "bulbasaur",
+      url: "https://pokeapi.co/api/v2/pokemon/1/",
+    },
+    {
+      id: 2,
+      name: "ivysaur",
+      url: "https://pokeapi.co/api/v2/pokemon/2/",
+    },
+  ];
+
+  localStorage.setItem("favorites", JSON.stringify(favorites));
+
+  expect(handleIsFavorite("1")).toBe(true);
+});
+
+test("favorites remove item from localStorage", () => {
+  const favorites: any[] = [
+    {
+      id: "1",
+      name: "bulbasaur",
+      url: "https://pokeapi.co/api/v2/pokemon/1/",
+    },
+    {
+      id: "2",
+      name: "ivysaur",
+      url: "https://pokeapi.co/api/v2/pokemon/2/",
+    },
+  ];
+
+  handleFavorite("1", favorites, favorites[0], (arg0: string[]) => "nothing");
+
+  const list = localStorage.getItem("favorites");
+
+  // @ts-ignore
+  expect(JSON.parse(list).length).toBe(1);
 });

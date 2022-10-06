@@ -6,47 +6,50 @@ import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import FavoriteIcon from "../../assets/img/favoritesIcon.png";
 import { MainContainer } from "./styles";
+import { usePokemonProvider } from "../../providers/PokemonProvider";
 
 const Home = () => {
+  const { currentPage, setCurrentPage } = usePokemonProvider();
+
   const navigate = useNavigate();
 
   const [pokemonList, setPokemonList] = useState([] as any[]);
   const [nextPage, setNextPage] = useState<string>("");
   const [previousPage, setPreviousPage] = useState<string>("");
 
+  // set the states with the data from the API on first render and pages changes
+  const handleChangePage = (url: string) => {
+    API.get(url).then((res) => {
+      setCurrentPage(url);
+      setPokemonList(res.data.results);
+      setNextPage(res.data.next);
+      setPreviousPage(res.data.previous);
+    });
+  };
+
   const handleNextPage = () => {
     if (nextPage) {
-      API.get(nextPage).then((response) => {
-        setPokemonList(response.data.results);
-        setNextPage(response.data.next);
-        setPreviousPage(response.data.previous);
-      });
+      handleChangePage(nextPage);
     }
   };
 
   const handlePreviousPage = () => {
     if (previousPage) {
-      API.get(previousPage).then((response) => {
-        setPokemonList(response.data.results);
-        setNextPage(response.data.next);
-        setPreviousPage(response.data.previous);
-      });
+      handleChangePage(previousPage);
     }
   };
 
   // similar to componentDidMount, with list of pokemons on first render with next and second page variables
   useEffect(() => {
-    API.get("pokemon").then((response) => {
-      setPokemonList(response.data.results);
+    // if currentPage has a url, go to that url. Else go to first page
+    if (currentPage.length) {
+      handleChangePage(currentPage);
+      return;
+    }
 
-      if (response.data.next) {
-        setNextPage(response.data.next);
-      }
+    handleChangePage("pokemon");
 
-      if (response.data.previous) {
-        setPreviousPage(response.data.previous);
-      }
-    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -56,6 +59,7 @@ const Home = () => {
       <div className="pokemon-list">
         {pokemonList.map((pokemon) => (
           <CharacterCard
+            data-testid={pokemon.name}
             key={pokemon.url}
             name={pokemon.name}
             // get id from url
@@ -66,7 +70,7 @@ const Home = () => {
 
       <div
         className="favorite-button"
-        onClick={() => navigate("/favorites")}
+        onClick={() => navigate(`/favorites`)}
         data-testid="favorites-button"
       >
         <img alt="favorite-button" src={FavoriteIcon} />

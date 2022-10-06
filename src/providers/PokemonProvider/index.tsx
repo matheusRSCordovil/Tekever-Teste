@@ -4,7 +4,9 @@ interface Props {
   children: React.ReactNode;
 }
 
-type CharacterInfoProviderProps = {
+type PokemonProviderProps = {
+  currentPage: string;
+  setCurrentPage: (currentPage: string) => void;
   characterInfo: any;
   setCharacterInfo: (characterInfo: any) => void;
   favorites: any[];
@@ -12,34 +14,40 @@ type CharacterInfoProviderProps = {
 };
 
 const DEFAULT_VALUE = {
+  currentPage: "",
+  setCurrentPage: () => {},
   characterInfo: "",
   setCharacterInfo: () => {},
   favorites: [],
   setFavorites: () => {},
 };
 
-const CharacterInfoContext =
-  createContext<CharacterInfoProviderProps>(DEFAULT_VALUE);
+const PokemonContext = createContext<PokemonProviderProps>(DEFAULT_VALUE);
 
 // provider to share character info and favorites between components and avoid prop drilling, with better component separation
-export const CharacterInfoProvider: React.FC<Props> = ({ children }) => {
+export const PokemonProvider: React.FC<Props> = ({ children }) => {
   const [characterInfo, setCharacterInfo] = useState<string>(
     DEFAULT_VALUE.characterInfo
   );
   const [favorites, setFavorites] = useState<any[]>(DEFAULT_VALUE.favorites);
+  const [currentPage, setCurrentPage] = useState<string>(
+    DEFAULT_VALUE.currentPage
+  );
 
   return (
-    <CharacterInfoContext.Provider
+    <PokemonContext.Provider
       value={{
         characterInfo,
         setCharacterInfo,
         favorites,
         setFavorites,
+        currentPage,
+        setCurrentPage,
       }}
     >
       {children}
-    </CharacterInfoContext.Provider>
+    </PokemonContext.Provider>
   );
 };
 
-export const useCharacterInfoProvider = () => useContext(CharacterInfoContext);
+export const usePokemonProvider = () => useContext(PokemonContext);
